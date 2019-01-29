@@ -1,0 +1,64 @@
+﻿@model ProjetJB2.Models.Teacher
+
+@{
+	ViewBag.Title = "Login";
+
+	Layout = null;
+
+	<!--CSS-->
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+				<div class="panel-body">
+					@using (Html.BeginForm("SignIn", "Login", FormMethod.Post))
+					{
+						<fieldset>
+							<!--Formulaire de Connexion-->
+							<!--Login-->
+							<div class="form-group input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-user"></span>
+								</span>
+								@Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control", placeholder = "Login", required = "required" } })
+								@Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+							</div>
+
+							<!--Mot de Passe-->
+							<div class="form-group input-group">
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-lock"></span>
+								</span>
+								@Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password", required = "required" })
+								@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+							</div>
+
+							<!--Statut de l'utilisateur (Enseignant/Etudiant)-->
+							<div class="form-group">
+								<label class="radio-inline">
+									<input id="statStud" name="stat" value="Student" type="radio" checked="" />
+									Student
+								</label>
+								<label class="radio-inline">
+									<input id="statTeach" name="stat" value="Teacher" type="radio" />
+									Teacher
+								</label>
+							</div>
+
+							<!--Bouton de Connexion-->
+							<input class="btn btn-lg btn-success btn-block" type="submit" value="Login" />
+						</fieldset>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--JavaScript-->
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")

@@ -1,0 +1,111 @@
+﻿@model ProjetJB2.Models.Step
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Step</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BeginDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BeginDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        @if (Model.Notable == true && Model.Rate == null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Rate)
+            </dt>
+
+            <dd>
+                Livrable pas encore noté.
+            </dd>
+        }
+        else if (Model.Notable == true && Model.Rate != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Rate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Rate)/20
+            </dd>
+        }
+        else
+        {
+            <dt>Livrable non noté.</dt>
+        }
+    </dl>
+    <dl>
+  
+		<dt>
+			File
+		</dt>
+
+		<dd>
+			<!--Nom du Fichier-->
+			@Html.DisplayFor(model => model.Description) <!--Cette ligne est à changer-->
+			<!--Bouton de Téléchargement-->
+			@using (Html.BeginForm("DownloadFile", "Step", FormMethod.Post))
+			{
+				<button class="btn btn-info">Download</button>
+			}
+		</dd>
+	</dl>
+
+	<!--Formulaire d'Upload de Fichier-->
+	@using (Html.BeginForm("UploadFile", "Step", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		<div class="form-group">
+			<label for="file">Select Send File(.pdf)</label>
+			<input class="btn btn-default" type="file" accept=".pdf" id="file" name="file" />
+		</div>
+		<div class="form-group">
+			<input class="btn btn-info" type="submit" value="Upload" />
+		</div>
+	}
+
+    </form>
+</div>
+@if (Model.Notable == true && Model.Rate != null)
+{
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+else
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index", new { id = "backList" }, new { @class = "btn btn-danger" })
+    </p>
+}
